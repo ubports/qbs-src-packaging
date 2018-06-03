@@ -1,0 +1,33 @@
+Description: limit API tests to only common architectures
+ On other architectures they are segfaulting due to bugs in QtScript.
+ The stacktrace is (obtained on ppc64el):
+   #0  SLL_PopRange (end=<synthetic pointer>, start=<synthetic pointer>, N=<optimized out>, head=0x3fffb32004e0) at ../3rdparty/javascriptcore/JavaScriptCore/wtf/FastMalloc.cpp:742
+   #1  PopRange (end=<synthetic pointer>, start=<synthetic pointer>, N=<optimized out>, this=0x3fffb32004e0) at ../3rdparty/javascriptcore/JavaScriptCore/wtf/FastMalloc.cpp:2083
+   #2  ReleaseToCentralCache (N=192, cl=<optimized out>, this=0x3fffb3200478) at ../3rdparty/javascriptcore/JavaScriptCore/wtf/FastMalloc.cpp:2795
+   #3  QTWTF::TCMalloc_ThreadCache::Cleanup (this=0x3fffb3200478) at ../3rdparty/javascriptcore/JavaScriptCore/wtf/FastMalloc.cpp:2745
+   #4  0x00003fffb724c6d8 in QTWTF::TCMalloc_ThreadCache::DeleteCache (heap=0x3fffb3200478) at ../3rdparty/javascriptcore/JavaScriptCore/wtf/FastMalloc.cpp:3069
+   #5  0x00003fffb6a48604 in __nptl_deallocate_tsd () at pthread_create.c:157
+   #6  0x00003fffb6a489b8 in start_thread (arg=0x3fffb441f160) at pthread_create.c:322
+   #7  0x00003fffb745f870 in clone () at ../sysdeps/unix/sysv/linux/powerpc/powerpc64/clone.S:104
+ .
+ QBS is going to be ported away from QtScript, but in the mean time disable
+ API tests on non-common architectures to make the build pass.
+Author: Dmitry Shachnev <mitya57@debian.org>
+Forwarded: not-needed
+Last-Update: 2017-09-11
+
+--- a/tests/auto/auto.pro
++++ b/tests/auto/auto.pro
+@@ -14,5 +14,10 @@
+     blackbox/blackbox-apple.pro \
+     blackbox/blackbox-clangdb.pro \
+     blackbox/blackbox-java.pro \
+-    blackbox/blackbox-qt.pro \
+-    api
++    blackbox/blackbox-qt.pro
++
++equals(QT_ARCH, i386) | equals(QT_ARCH, x86_64) | \
++equals(QT_ARCH, arm) | equals(QT_ARCH, arm64) | \
++equals(QT_ARCH, s390x) {
++    SUBDIRS += api
++}

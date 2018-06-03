@@ -1,0 +1,14 @@
+usr/bin/qbs
+usr/bin/qbs-config
+usr/bin/qbs-config-ui
+usr/bin/qbs-create-project
+usr/bin/qbs-qmltypes
+usr/bin/qbs-setup-android
+usr/bin/qbs-setup-qt
+usr/bin/qbs-setup-toolchains
+usr/lib/*/qbs/plugins/libclangcompilationdbgenerator.so
+usr/lib/*/qbs/plugins/libqbs_cpp_scanner.so
+usr/lib/*/qbs/plugins/libqbs_qt_scanner.so
+usr/lib/*/qbs/plugins/libvisualstudiogenerator.so
+usr/lib/*/qbs/qbs_processlauncher
+usr/share/man/man1/qbs.1

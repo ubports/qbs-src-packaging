@@ -1,0 +1,16 @@
+Description: use the same SONAME scheme on kfreebsd as on Linux
+Author: Dmitry Shachnev <mitya57@debian.org>
+Forwarded: not-yet
+Last-Update: 2017-01-04
+
+--- a/src/lib/library.pri
++++ b/src/lib/library.pri
+@@ -29,7 +29,7 @@
+ include(../../qbs_version.pri)
+ VERSION = $${QBS_VERSION}
+ 
+-linux {
++!win32 {
+     # Turn off absurd qmake's soname "logic" and directly add the linker flag.
+     QMAKE_LFLAGS_SONAME =
+     QMAKE_LFLAGS = -Wl,-soname=lib$${TARGET}.so.$${QBS_VERSION_MAJ}.$${QBS_VERSION_MIN}
