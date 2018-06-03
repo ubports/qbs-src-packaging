@@ -11,7 +11,7 @@ TMP_HOME_DIR = $(CURDIR)/debian/home
 export QT_SELECT := qt5
 
 %:
-	dh $@ --with pkgkde_symbolshelper
+	dh $@
 
 override_dh_auto_clean:
 	dh_auto_clean
