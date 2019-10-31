@@ -5,7 +5,7 @@ Last-Update: 2015-03-13
 
 --- a/src/lib/corelib/use_installed_corelib.pri
 +++ b/src/lib/corelib/use_installed_corelib.pri
-@@ -2,11 +2,9 @@
+@@ -2,11 +2,9 @@ include(qbs_version.pri)
  
  QBSLIBDIR=$${PWD}/../../lib
  unix {

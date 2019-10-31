@@ -1,0 +1,16 @@
+Description: fix DESTDIR for qbs_processlauncher
+Author: Alexander Volkov <a.volkov@rusbitech.ru>
+Forwarded: no
+Last-Update: 2018-04-04
+
+--- a/src/libexec/libexec.pri
++++ b/src/libexec/libexec.pri
+@@ -3,7 +3,7 @@ include(../install_prefix.pri)
+ win32:LIBEXEC_BASE_DIR=bin
+ else:LIBEXEC_BASE_DIR=libexec/qbs
+ 
+-!isEmpty(QBS_LIBEXEC_DESTDIR):DESTDIR=$${QBS_LIBEXEC_DESTDIR}
++!isEmpty(QBS_LIBEXEC_DESTDIR):DESTDIR=../../../$${QBS_LIBEXEC_DESTDIR}
+ else:DESTDIR=../../../$$LIBEXEC_BASE_DIR
+ 
+ !isEmpty(QBS_LIBEXEC_INSTALL_DIR):target.path = $${QBS_LIBEXEC_INSTALL_DIR}

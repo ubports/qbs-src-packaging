@@ -11,7 +11,7 @@ TMP_HOME_DIR = $(CURDIR)/debian/home
 export QT_SELECT := qt5
 
 %:
-	dh $@
+	dh $@ --with pkgkde_symbolshelper
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -27,16 +27,18 @@ override_dh_auto_configure:
 		CONFIG+=qbs_enable_unit_tests \
 		QBS_INSTALL_PREFIX=/usr \
 		QBS_LIBEXEC_INSTALL_DIR=/usr/lib/${DEB_HOST_MULTIARCH}/qbs \
-		QBS_LIBEXEC_DESTDIR=../../../lib/${DEB_HOST_MULTIARCH}/qbs \
+		QBS_LIBEXEC_DESTDIR=lib/${DEB_HOST_MULTIARCH}/qbs \
 		QBS_RELATIVE_LIBEXEC_PATH=../lib/${DEB_HOST_MULTIARCH}/qbs \
 		QBS_LIBRARY_DIRNAME=lib/${DEB_HOST_MULTIARCH}
 
 override_dh_auto_build-indep:
 	dh_auto_build -- docs
+	dh_auto_build -- sub-static-res-pro
 
 override_dh_auto_install-indep:
 	dh_auto_build -- INSTALL_ROOT=$(CURDIR)/debian/tmp install_inst_html_docs
 	dh_auto_build -- INSTALL_ROOT=$(CURDIR)/debian/tmp sub-static-pro-install_subtargets
+	dh_auto_build -- INSTALL_ROOT=$(CURDIR)/debian/tmp sub-static-res-pro-install_subtargets
 
 override_dh_auto_test-arch:
 ifeq ($(filter nocheck,$(DEB_BUILD_OPTIONS)),)
@@ -55,7 +57,6 @@ override_dh_auto_test-indep:
 
 override_dh_install:
 	rm -fv debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/libqbscore.so.1
-	rm -fv debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/libqbsqtprofilesetup.so.1
 	rm -fv debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/qbs/dmgbuild
 	rm -rfv debian/tmp/usr/share/qbs/python
 	dh_install
@@ -65,6 +66,3 @@ override_dh_missing:
 
 override_dh_installchangelogs:
 	dh_installchangelogs changelogs/changes-${DEB_VERSION_UPSTREAM:+dfsg=}.md
-
-override_dh_strip:
-	dh_strip --dbgsym-migration='qbs-dbg (<< 1.4.5+dfsg-1~)'

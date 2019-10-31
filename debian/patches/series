@@ -1,5 +1,6 @@
 remove_rpaths.diff
 disable_tests_qtscript.diff
 skip_test_concurrent.diff
-fix_ftbfs_gcc6.diff
 kfreebsd_soname.diff
+processlauncher_destdir.diff
+qml_type_descriptions.diff

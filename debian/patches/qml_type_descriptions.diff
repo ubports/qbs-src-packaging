@@ -1,0 +1,18 @@
+Description: fix the generation of QML type descriptions
+ In our case the libraries are in lib/${DEB_HOST_MULTIARCH}/, not in lib/.
+Author: Alexander Volkov <a.volkov@rusbitech.ru>
+Author: Dmitry Shachnev <mitya57@debian.org>
+Forwarded: not-yet
+Last-Update: 2019-04-27
+
+--- a/static-res.pro
++++ b/static-res.pro
+@@ -6,7 +6,7 @@ else: qbsbindir = bin
+ envSpec =
+ unix:qbs_disable_rpath {
+     !isEmpty(QBS_DESTDIR): qbslibdir = $$QBS_DESTDIR
+-    else: qbslibdir = $$OUT_PWD/lib
++    else: qbslibdir = $$OUT_PWD/$$QBS_LIBRARY_DIRNAME
+     macos: envVar = DYLD_LIBRARY_PATH
+     else: envVar = LD_LIBRARY_PATH
+     oldVal = $$getenv($$envVar)

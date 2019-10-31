@@ -5,7 +5,7 @@ Last-Update: 2016-03-20
 
 --- a/tests/auto/blackbox/tst_blackbox.cpp
 +++ b/tests/auto/blackbox/tst_blackbox.cpp
-@@ -1297,6 +1297,7 @@
+@@ -1616,6 +1616,7 @@ void TestBlackbox::clean()
  
  void TestBlackbox::concurrentExecutor()
  {
