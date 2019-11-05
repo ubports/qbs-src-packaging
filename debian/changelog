@@ -1,3 +1,9 @@
+qbs (1.13.1-2ubports1) xenial; urgency=medium
+
+  * Ubports import
+
+ -- Alberto Mardegan <mardy@users.sourceforge.net>  Tue, 05 Nov 2019 22:04:13 +0300
+
 qbs (1.13.1-2) unstable; urgency=medium
 
   * Update debian/libqbscore1.13.symbols from the current build log.
